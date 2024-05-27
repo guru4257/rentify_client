@@ -7,11 +7,13 @@ export default function Contact({ listing, senderEmail, senderName }) {
   const onChange = (e) => {
     setMessage(e.target.value);
   };
+  
+  const base_url = import.meta.env.VITE_SERVER_URL
 
   useEffect(() => {
     const fetchLandlord = async () => {
       try {
-        const res = await fetch(`/api/user/getDetails/${listing.userRef}`);
+        const res = await fetch(base_url+`/api/user/getDetails/${listing.userRef}`);
         const data = await res.json();
         setLandlord(data);
       } catch (error) {
@@ -31,7 +33,7 @@ export default function Contact({ listing, senderEmail, senderName }) {
       propertyName : listing.name,
       message : message
     }
-    const res = await fetch('/api/user/sendEmail/', {
+    const res = await fetch(base_url+'/api/user/sendEmail/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

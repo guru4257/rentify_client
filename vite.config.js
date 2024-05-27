@@ -5,14 +5,14 @@ import react from '@vitejs/plugin-react-swc';
 
 // server_url = import.meta.env.VITE_SERVER_URL
 export default defineConfig({
-  server: {
-    proxy: {
-      '/api': {
-        target: 'https://rentify-server-dnlb.onrender.com',
-        secure: false,
-      },
-    },
-  },
+  // server: {
+  //   proxy: {
+  //     '/api': {
+  //       target: 'https://rentify-server-dnlb.onrender.com',
+  //       secure: false,
+  //     },
+  //   },
+  // },
 
   plugins: [react()],
 });

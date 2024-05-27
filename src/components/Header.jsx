@@ -25,12 +25,13 @@ export default function Header() {
   };
 
   const dispatch = useDispatch()
-
+  const base_url = import.meta.env.VITE_SERVER_URL
+ 
 
   const handleSignOut = async () => {
     try {
       dispatch(signOutUserStart());
-      const res = await fetch('/api/auth/signout');
+      const res = await fetch(base_url+'/api/auth/signout');
       const data = await res.json();
       if (data.success === false) {
         dispatch(deleteUserFailure(data.message));

@@ -33,12 +33,13 @@ export default function Listing() {
   const { currentUser , login} = useSelector((state) => state.user);
   console.log(currentUser)
   const navigate = useNavigate()
-
+  const base_url = import.meta.env.VITE_SERVER_URL
+  
   useEffect(() => {
     const fetchListing = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`/api/listing/get/${params.listingId}`);
+        const res = await fetch(base_url+`/api/listing/get/${params.listingId}`);
         const data = await res.json();
         if (data.success === false) {
           setError(true);
@@ -62,7 +63,7 @@ export default function Listing() {
     try{
        
        setLoading(true);
-       const res = await fetch(`/api/user/getDetails/${userId}`);
+       const res = await fetch(base_url+`/api/user/getDetails/${userId}`);
        const data = await res.json();
        if (data.success === false) {
         setError(true);
