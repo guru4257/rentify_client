@@ -13,6 +13,19 @@ export default function Home() {
   SwiperCore.use([Navigation]);
   console.log(offerListings);
   const base_url = import.meta.env.VITE_SERVER_URL
+
+  const SkeletonLoader = () => (
+    <div className="h-[500px] gray-200 rounded-lg overflow-hidden relative">
+    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gray-300 to-transparent animate-shimmer"></div>
+  </div>
+  );
+
+  const CardSkeletonLoader = () => (
+    <div className="w-full h-40 bg-gray-200 rounded-lg overflow-hidden relative">
+      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gray-300 to-transparent animate-shimmer"></div>
+    </div>
+  );
+
   useEffect(() => {
     const fetchOfferListings = async () => {
       try {
@@ -72,7 +85,7 @@ export default function Home() {
       {/* swiper */}
       <Swiper navigation>
         {offerListings &&
-          offerListings.length > 0 &&
+          offerListings.length > 0 ? (
           offerListings.map((listing) => (
             <SwiperSlide>
               <div
@@ -84,13 +97,15 @@ export default function Home() {
                 key={listing._id}
               ></div>
             </SwiperSlide>
-          ))}
+          ))):(
+            <SkeletonLoader />
+          )}
       </Swiper>
 
       {/* listing results for offer, sale and rent */}
 
       <div className='max-w-6xl mx-auto p-3 flex flex-col gap-8 my-10'>
-        {offerListings && offerListings.length > 0 && (
+        {offerListings && offerListings.length > 0 ?  (
           <div className=''>
             <div className='my-3'>
               <h2 className='text-2xl font-semibold text-slate-600'>Recent offers</h2>
@@ -102,8 +117,19 @@ export default function Home() {
               ))}
             </div>
           </div>
+        ):(
+          <div>
+          <div className="my-3 flex justify-between items-center">
+            <h2 className="text-2xl font-semibold text-slate-600">Recent offers</h2>
+          </div>
+          <div className="flex gap-4">
+            {Array.from({ length: 4 }).map((_, index) => (
+              <CardSkeletonLoader key={index} />
+            ))}
+          </div>
+        </div>
         )}
-        {rentListings && rentListings.length > 0 && (
+        {rentListings && rentListings.length > 0 ? (
           <div className=''>
             <div className='my-3'>
               <h2 className='text-2xl font-semibold text-slate-600'>Recent places for rent</h2>
@@ -115,8 +141,19 @@ export default function Home() {
               ))}
             </div>
           </div>
+        ):(
+          <div>
+          <div className="my-3 flex justify-between items-center">
+            <h2 className="text-2xl font-semibold text-slate-600">Recent places for rent</h2>
+          </div>
+          <div className="flex gap-4">
+            {Array.from({ length: 4 }).map((_, index) => (
+              <CardSkeletonLoader key={index} />
+            ))}
+          </div>
+        </div>
         )}
-        {saleListings && saleListings.length > 0 && (
+        {saleListings && saleListings.length > 0 ? (
           <div className=''>
             <div className='my-3'>
               <h2 className='text-2xl font-semibold text-slate-600'>Recent places for sale</h2>
@@ -128,6 +165,17 @@ export default function Home() {
               ))}
             </div>
           </div>
+        ):(
+          <div>
+          <div className="my-3 flex justify-between items-center">
+            <h2 className="text-2xl font-semibold text-slate-600">Recent places for sale</h2>
+          </div>
+          <div className="flex gap-4">
+            {Array.from({ length: 4 }).map((_, index) => (
+              <CardSkeletonLoader key={index} />
+            ))}
+          </div>
+        </div>
         )}
       </div>
     </div>
