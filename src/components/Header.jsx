@@ -10,6 +10,8 @@ import {
   deleteUserStart,
   deleteUserSuccess,
   signOutUserStart,
+  signOutUserFailure,
+  signOutUserSuccess,
 } from '../redux/user/userSlice';
 
 export default function Header() {
@@ -34,12 +36,12 @@ export default function Header() {
       const res = await fetch(base_url+'/api/auth/signout');
       const data = await res.json();
       if (data.success === false) {
-        dispatch(deleteUserFailure(data.message));
+        dispatch(signOutUserFailure(data.message));
         return;
       }
-      dispatch(deleteUserSuccess(data));
+      dispatch(signOutUserSuccess());
     } catch (error) {
-      dispatch(deleteUserFailure(data.message));
+      dispatch(signOutUserFailure(data.message));
     }
   };
 
